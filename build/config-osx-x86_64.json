@@ -5,5 +5,8 @@
     "CXXFLAGS" : ["-O2", "-std=c++11", "-Wall", "-Werror"],
     "CPPDEFINES" : [],
     "CPPPATH" : ["/usr/local/include"],
-    "LIBPATH" : ["/usr/local/lib"]
+    "LIBPATH" : ["/usr/local/lib"],
+    "PYTHONCPPPATH" : ["/System/Library/Frameworks/Python.framework/Versions/Current/Headers/"],
+    "PYTHONLIBS" : [],
+    "PYTHONLINKFLAGS" : ["-framework", "Python"]
 }

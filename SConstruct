@@ -1,5 +1,5 @@
 """
-Copyright (c) 2016 Doyub Kim
+Copyright (c) 2017 Doyub Kim
 """
 
 import os, sys
@@ -63,6 +63,12 @@ with open(config_filename, 'r') as config_file:
         env.Append(LINKFLAGS=config['LINKFLAGS'])
     if 'LIBPATH' in config:
         env.Append(LIBPATH=config['LIBPATH'])
+    if 'PYTHONCPPPATH' in config:
+        env['PYTHONCPPPATH'] = config['PYTHONCPPPATH']
+    if 'PYTHONLIBS' in config:
+        env['PYTHONLIBS'] = config['PYTHONLIBS']
+    if 'PYTHONLINKFLAGS' in config:
+        env['PYTHONLINKFLAGS'] = config['PYTHONLINKFLAGS']
 
 Export('env')
 
@@ -112,6 +118,10 @@ libobj_env, libobj = build('external/src/obj/SConscript')
 # Core libraries
 jet_env, jet = build('src/jet/SConscript')
 Requires(jet, os.path.join(env['BUILDDIR'], 'external/src/obj'))
+
+# Python binding
+pyjet_env, pyjet = build('src/python/SConscript')
+Requires(pyjet, os.path.join(env['BUILDDIR'], 'src/jet'))
 
 # Examples
 build_app('examples', 'hello_fluid_sim')

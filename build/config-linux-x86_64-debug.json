@@ -6,5 +6,7 @@
     "CPPDEFINES" : ["JET_DEBUG_MODE"],
     "CPPPATH" : [],
     "LINKFLAGS" : ["-pthread"],
-    "LIBPATH" : ["/usr/lib/x86_64-linux-gnu"]
+    "LIBPATH" : ["/usr/lib/x86_64-linux-gnu"],
+    "PYTHONCPPPATH" : ["/usr/include/python2.7"],
+    "PYTHONLIBS" : ["python2.7"]
 }
