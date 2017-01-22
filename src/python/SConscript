@@ -12,8 +12,10 @@ lib_env.Append(CPPPATH = [
     os.path.join(script_dir, '../../external/include'),
     lib_env['PYTHONCPPPATH'],
     script_dir])
-lib_env.Append(LIBS = [lib_env['PYTHONLIBS']])
-lib_env.Append(LINKFLAGS = [lib_env['PYTHONLINKFLAGS']])
+if 'PYTHONLIBS' in lib_env:
+    lib_env.Append(LIBS = [lib_env['PYTHONLIBS']])
+if 'PYTHONLINKFLAGS' in lib_env:
+    lib_env.Append(LINKFLAGS = [lib_env['PYTHONLINKFLAGS']])
 lib_env['SHLIBPREFIX'] = ''
 if utils.is_unix():
     lib_env['SHLIBSUFFIX'] = '.so'
