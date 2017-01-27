@@ -21,6 +21,8 @@ static std::ostream* warnOutStream = &std::cout;
 static std::ostream* errorOutStream = &std::cerr;
 static std::ostream* debugOutStream = &std::cout;
 
+static bool sIsEnabled = true;
+
 inline std::ostream* levelToStream(LoggingLevel level) {
     switch (level) {
         case LoggingLevel::Info:
@@ -56,15 +58,17 @@ Logger::Logger(LoggingLevel level)
 
 Logger::~Logger() {
     std::lock_guard<std::mutex> lock(critical);
+    if (sIsEnabled) {
 #ifdef JET_DEBUG_MODE
-    if (_level != LoggingLevel::Debug) {
+        if (_level != LoggingLevel::Debug) {
 #endif
-    auto strm = levelToStream(_level);
-    (*strm) << _buffer.str() << std::endl;
-    strm->flush();
+        auto strm = levelToStream(_level);
+        (*strm) << _buffer.str() << std::endl;
+        strm->flush();
 #ifdef JET_DEBUG_MODE
+        }
+#endif
     }
-#endif
 }
 
 
@@ -112,6 +116,11 @@ std::string Logging::getHeader(LoggingLevel level) {
         levelToString(level).c_str(),
         timeStr);
     return header;
+}
+
+void Logging::mute() {
+    std::lock_guard<std::mutex> lock(critical);
+    sIsEnabled = false;
 }
 
 }  // namespace jet
