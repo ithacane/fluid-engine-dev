@@ -38,4 +38,6 @@ before_install:
 
 script:
   - scons
+  - . setenv.sh
   - bin/unit_tests
+  - python src/tests/python_tests/main.py
